@@ -16,15 +16,25 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+
 
 //services
-import { SidenavService } from './services/sidenav.service'
+import { SidenavService } from './services/sidenav.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LeftMenuComponent
+    LeftMenuComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +46,14 @@ import { SidenavService } from './services/sidenav.service'
     ReactiveFormsModule,
     MatDividerModule,
     MatListModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
