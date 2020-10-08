@@ -72,7 +72,12 @@ export class DashboardComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+        this.dataSource.data.forEach(row => 
+          {
+            this.selection.select(row)
+          });
+    
+          //this.selectedRowIndex = row.id;   
   }
 
 
@@ -92,6 +97,4 @@ export class DashboardComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
   
-
-
 }
