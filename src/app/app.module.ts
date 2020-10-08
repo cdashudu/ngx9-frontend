@@ -22,12 +22,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 //services
 import { SidenavService } from './services/sidenav.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component'
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]

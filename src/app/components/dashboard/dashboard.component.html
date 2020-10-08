@@ -1,98 +1,60 @@
 <div class="container" fxLayout="column" fxLayoutGap="50px">
-  <div class="alerts-toolbar" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="24px">
-    <div class="date-picker">
-      <mat-form-field appearance="fill">
-        <mat-label>From date</mat-label>
-        <!-- #docregion toggle -->
-        <input matInput [matDatepicker]="fromPicker">
-        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-        <mat-datepicker #fromPicker></mat-datepicker>
-        <!-- #enddocregion toggle -->
+  <div class="example-container mat-elevation-z8">
+    <div class="example-header">
+      <mat-form-field style="width: 100%;">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
       </mat-form-field>
     </div>
-    <div class="date-picker">
-      <mat-form-field appearance="fill">
-        <mat-label>To date</mat-label>
-        <input matInput [matDatepicker]="toPicker">
-        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-        <mat-datepicker #toPicker></mat-datepicker>
-      </mat-form-field>
-    </div>
-    <div class="memberId">
-      <mat-form-field appearance="fill">
-        <mat-label>Member ID</mat-label>
-        <input matInput>
-      </mat-form-field>
-    </div>
-    <div class="alert">
-      <mat-form-field appearance="fill">
-        <mat-label>Alert Type</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="alert">
-      <mat-form-field appearance="fill">
-        <mat-label>Alert Status</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let food of foods" [value]="food.value">
-            {{food.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
 
-  <div class="view-export" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30px" style="padding-right: 5%;
-  ">
-    <button mat-raised-button color="primary">View</button>
-    <button mat-raised-button color="primary">Export to Excel</button>
-    <div>
-      <mat-form-field>
-        <!-- <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter"> -->
-        <input matInput placeholder="Search">
-      </mat-form-field>
-    </div>
-  </div>
+    <mat-table #table [dataSource]="dataSource">
 
-  <div class="user-table" fxLayoutAlign="center ">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
 
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-    
       <!-- Position Column -->
       <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
       </ng-container>
-    
+
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
       </ng-container>
-    
+
       <!-- Weight Column -->
       <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
       </ng-container>
-    
+
       <!-- Symbol Column -->
       <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
       </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+      </mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
   </div>
+
+
   <div fxLayoutAlign="end">
     <button mat-raised-button color="primary">Submit</button>
   </div>
